@@ -26,8 +26,3 @@ variable "main_storage_account_id" {
   default     = null
 }
   
-variable "workspace_id" {
-  type        = string
-  description = "The name of the workspace"
-  
-}

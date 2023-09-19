@@ -19,5 +19,5 @@ resource "azurerm_subnet" "nv-sn-cluster" {
   virtual_network_name = azurerm_virtual_network.vn.name
   depends_on           = [azurerm_resource_group.main]
 }
- 
+
  

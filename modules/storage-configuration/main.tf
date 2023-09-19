@@ -23,14 +23,14 @@ resource "azurerm_user_assigned_identity" "workspace_user_identity" {
 
 
 
-resource "azurerm_federated_identity_credential" "spark-credential" {
-  name                = "workspaceID-spark-credential"
-  resource_group_name = var.resource_group_name
-  audience            = ["api://AzureADTokenExchange"]
-  issuer              = var.issuer_url
-  parent_id           = azurerm_user_assigned_identity.workspace_user_identity.id
-  subject             = "system:serviceaccount:${var.workspace_id}:spark-service-account"
-}
+# resource "azurerm_federated_identity_credential" "spark-credential" {
+#   name                = "workspaceID-spark-credential"
+#   resource_group_name = var.resource_group_name
+#   audience            = ["api://AzureADTokenExchange"]
+#   issuer              = var.issuer_url
+#   parent_id           = azurerm_user_assigned_identity.workspace_user_identity.id
+#   subject             = "system:serviceaccount:${var.workspace_id}:spark-service-account"
+# }
 
 
 resource "azurerm_storage_account" "module_strg_acct" {

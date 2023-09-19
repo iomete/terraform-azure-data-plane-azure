@@ -9,11 +9,10 @@ variable "zones" {
   description = "AKS region where cluster and resources will be created"
 }
 
-variable "workspace_id" {
+variable "account_id" {
+  description = "The ID of the account that will be created for IOMETE. This account will be used to create and manage your infrastructure. Please make sure you have valid account ID, otherwise the resource creation will fail."
   type        = string
-  description = "Workspace ID for lakehouse"
 }
-
 variable "orchestrator_version" {
   description = "AKS kubernetes version"
   type        = string
@@ -73,7 +72,7 @@ variable "service_cidr" {
 }
 
 variable "dns_service_ip" {
-  type    = string
-  default = "10.0.0.10"
+  type        = string
+  default     = "10.0.0.10"
   description = "DNS service ip for the cluster"
 }

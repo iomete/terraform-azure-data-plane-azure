@@ -7,8 +7,9 @@ resource "kubernetes_secret" "iom-manage-secrets" {
   }
 
   data = {
-    "azure.settings" = jsonencode({
+    "settings" = jsonencode({
       region = var.location,
+      cloud  = "azure",
       cluster = {
         id                                = local.cluster_id,
         name                              = local.cluster_name,
@@ -37,15 +38,20 @@ resource "kubernetes_secret" "iom-manage-secrets" {
       },
 
       aks = {
-        name           = azurerm_kubernetes_cluster.main.name,
-        endpoint       = azurerm_kubernetes_cluster.main.kube_config.0.host,
-        cluster_fqdn   = azurerm_kubernetes_cluster.main.fqdn,
-        workspace_id   = var.workspace_id
+        name         = azurerm_kubernetes_cluster.main.name,
+        endpoint     = azurerm_kubernetes_cluster.main.kube_config.0.host,
+        cluster_fqdn = azurerm_kubernetes_cluster.main.fqdn,
       },
 
       terraform = {
         module_version = local.module_version
       },
+
+      connection = {
+        client_certificate     = base64decode(azurerm_kubernetes_cluster.main.kube_config.0.client_certificate),
+        client_key             = base64decode(azurerm_kubernetes_cluster.main.kube_config.0.client_key),
+        cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.main.kube_config.0.cluster_ca_certificate),
+      }
 
     })
   }
@@ -93,5 +99,34 @@ resource "helm_release" "fluxcd" {
     value = "false"
   }
 
+
+}
+
+
+resource "helm_release" "iomete-agent" {
+  name       = "iomete-agent"
+  namespace  = "default"
+  repository = "https://chartmuseum.iomete.com"
+  chart      = "iom-agent"
+  version    = "0.2.0"
+  depends_on = [
+    helm_release.fluxcd,
+    kubernetes_secret.iom-manage-secrets,
+  ]
+
+  set {
+    name  = "iometeAccountId"
+    value = var.account_id
+  }
+
+  set {
+    name  = "cloud"
+    value = "azure"
+  }
+
+  set {
+    name  = "region"
+    value = var.location
+  }
 
 }

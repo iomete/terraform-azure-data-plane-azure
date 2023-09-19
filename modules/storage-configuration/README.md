@@ -7,13 +7,12 @@
 
 module "data-plane-azure_storage-configuration" {
   source                      = "iomete/data-plane-azure/azure//modules/storage-configuration"
-  version                     = "1.0.0"
+  version                     = "1.0.1"
   issuer_url                  = var.issuer_url
   resource_group_name         = var.resource_group_name
   location                    = var.location
   cluster_name                = var.cluster_name
   main_storage_account_id     = var.storage_account
-  workspace_id                = var.workspace_id
 }
 
 #####################
@@ -41,6 +40,5 @@ output "workspaceID" {
 | resource_group_name | Cluster installed resource group name | yes |
 | cluster_name | Existing cluster name | yes |
 | main_storage_account_id | Existing storage account id | yes |
-| workspace_id | Workspace id from IOMETE control plane | yes |
 | issuer_url | Data plane issuer url | yes |
 

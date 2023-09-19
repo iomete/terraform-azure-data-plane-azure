@@ -28,10 +28,10 @@ Open this file ordinary text editor and copy the content of the file to the IOME
  
  
 module "data-plane" {
-  source     = "iomete/data-plane-azure/azure"
-  version    = "1.0.0"
-  location   = "eastus" # Cluster installed region
-  workspace_id = "pw9if-dsk"
+  source      = "iomete/data-plane-azure/azure"
+  version     = "1.0.1"
+  account_id  = "account_id"
+  location    = "eastus" # Cluster installed region
 
 }
 
@@ -87,6 +87,5 @@ terraform apply
 
 | Name | Description | Required |
 | --- | --- | --- |
-| workspace_id | Workspace ID from IOMETE control plane when creted new cluster | yes |
 | location | The location of the AKS cluster. | yes |
  

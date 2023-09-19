@@ -10,13 +10,12 @@ resource "azurerm_resource_group" "main" {
   tags     = local.tags
 }
 
-  
+
 
 locals {
   cluster_id           = random_id.random.hex
   cluster_name         = "iom-dataplane-${random_id.random.hex}"
   storage_account_name = "iomdataplane${random_id.random.hex}"
-  workspace_id         = var.workspace_id
   module_version       = "1.0.0"
 
 
@@ -76,7 +75,6 @@ module "storage-configuration" {
   location                = var.location
   cluster_name            = local.cluster_name
   main_storage_account_id = azurerm_storage_account.main.id
-  workspace_id            = var.workspace_id
 
 }
 

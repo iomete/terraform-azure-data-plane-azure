@@ -39,7 +39,7 @@ resource "null_resource" "check_workload_identity_status" {
 ###############################################
 # AKS Cluster
 ###############################################
- 
+
 resource "azurerm_kubernetes_cluster" "main" {
   name = local.cluster_name
   ### choose the resource goup to use for the cluster
@@ -70,7 +70,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
   }
 
- 
+
   tags = local.tags
   network_profile {
     load_balancer_sku = "standard"
@@ -81,7 +81,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   http_application_routing_enabled = false
- 
+
 
   identity {
     type = "SystemAssigned"
