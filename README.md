@@ -88,4 +88,5 @@ terraform apply
 | Name | Description | Required |
 | --- | --- | --- |
 | location | The location of the AKS cluster. | yes |
- 
+
+https://stackoverflow.com/questions/75110124/creating-data-lake-causes-error-code-403-or-409-checking-for-existence-of-exist

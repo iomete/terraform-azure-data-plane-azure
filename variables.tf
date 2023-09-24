@@ -1,18 +1,24 @@
+variable "cluster_name" {
+  type        = string
+  description = "A unique cluster name for IOMETE. It should be unique withing GCP project and compatible with GCP naming conventions (See: https://cloud.google.com/compute/docs/naming-resources)."
+}
+
+variable "lakehouse_storage_account_name" {
+  type        = string
+  description = "Storage account name for the cluster"
+}
 
 variable "location" {
   type        = string
   description = "AKS region where cluster will be created"
 }
+
 variable "zones" {
   type        = string
   default     = "2"
   description = "AKS region where cluster and resources will be created"
 }
 
-variable "account_id" {
-  description = "The ID of the account that will be created for IOMETE. This account will be used to create and manage your infrastructure. Please make sure you have valid account ID, otherwise the resource creation will fail."
-  type        = string
-}
 variable "orchestrator_version" {
   description = "AKS kubernetes version"
   type        = string
@@ -51,7 +57,6 @@ variable "system_vm_size" {
   description = "Node size for for system"
 
 }
-
 
 variable "address_space" {
   type        = list(any)
