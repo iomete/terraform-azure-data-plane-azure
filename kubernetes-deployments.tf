@@ -16,10 +16,16 @@ provider "helm" {
   }
 }
 
-resource "kubernetes_secret" "data-plane-secret" {
+resource "kubernetes_namespace" "iomete-system" {
+    metadata {
+        name = "iomete-system"
+    }
+}
 
+resource "kubernetes_secret" "data-plane-secret" {
   metadata {
     name = "iomete-data-plane-secret"
+    namespace = "iomete-system"
   }
 
   data = {
