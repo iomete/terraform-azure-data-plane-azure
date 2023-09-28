@@ -89,4 +89,17 @@ terraform apply
 | --- | --- | --- |
 | location | The location of the AKS cluster. | yes |
 
+
+
+
+
+# The current principal should have "Storage Blob Data Owner" role on the subscription in order to create the Gen2 storage account
 https://stackoverflow.com/questions/75110124/creating-data-lake-causes-error-code-403-or-409-checking-for-existence-of-exist
+```hcl
+# The current principal should have "Storage Blob Data Owner" role on the subscription in order to create the Gen2 storage account
+resource "azurerm_role_assignment" "example" {
+  scope                = data.azurerm_subscription.primary.id
+  role_definition_name = "storage blob data owner"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
+```

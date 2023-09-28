@@ -29,29 +29,25 @@ resource "kubernetes_secret" "data-plane-secret" {
       cluster_name = var.cluster_name,
 
       storage_configuration = {
-        lakehouse_storage_account_name        = var.lakehouse_storage_account_name,
-        lakehouse_container_name              = azurerm_storage_container.lakehouse.name,
-        assets_container_name                 = azurerm_storage_container.assets.name,
+        lakehouse_storage_account_name = var.lakehouse_storage_account_name,
+        lakehouse_container_name       = azurerm_storage_container.lakehouse.name,
+        assets_container_name          = azurerm_storage_container.assets.name,
+        lakehouse_storage_account_key = azurerm_storage_account.lakehouse_storage_account.primary_access_key
+      },
+
+      workload_identity = {
+        tenant_id                             = data.azurerm_client_config.current.tenant_id,
         lakehouse_user_assigned_identity_name = local.lakehouse_user_assigned_identity_name
+        client_id                             = data.azurerm_client_config.current.client_id,
+        resource_group_name                   = azurerm_resource_group.main.name,
+        node_resource_group_name              = azurerm_kubernetes_cluster.main.node_resource_group
       },
-
-      cluster = {
-        resource_group_name = azurerm_resource_group.main.name,
-        tenant_id           = data.azurerm_client_config.current.tenant_id,
-        client_id           = data.azurerm_client_config.current.client_id,
-
-        node_resource_group_name          = azurerm_kubernetes_cluster.main.node_resource_group,
-        azurerm_subscription_tenant_id    = data.azurerm_subscription.current.tenant_id,
-        azurerm_subscription_display_name = data.azurerm_subscription.current.display_name
-      },
-
       aks = {
         name            = azurerm_kubernetes_cluster.main.name,
         endpoint        = azurerm_kubernetes_cluster.main.kube_config.0.host,
         cluster_fqdn    = azurerm_kubernetes_cluster.main.fqdn,
         oidc_issuer_url = azurerm_kubernetes_cluster.main.oidc_issuer_url
       },
-
       terraform = {
         module_version = local.module_version
       }

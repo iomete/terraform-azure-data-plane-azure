@@ -1,4 +1,6 @@
-
+output "lakehouse_uai" {
+  value = azurerm_user_assigned_identity.lakehouse.id
+}
 #output "aks_id" {
 #  description = "The `azurerm_kubernetes_cluster`'s id."
 #  value       = azurerm_kubernetes_cluster.main.id
